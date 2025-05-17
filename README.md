@@ -1,4 +1,4 @@
-# GlassyUI
+# Glassykit
 
 <div align="center">
   <img src="https://img.shields.io/badge/React-19.1.0-blue" alt="React v19.1.0" />
@@ -28,13 +28,13 @@
 
 ```bash
 # With npm
-npm install glassy-ui
+npm install glassykit
 
 # With yarn
-yarn add glassy-ui
+yarn add glassykit
 
 # With pnpm
-pnpm add glassy-ui
+pnpm add glassykit
 ```
 
 ## Quick Start
@@ -43,8 +43,8 @@ Wrap your application with `ThemeProvider` to enable theme switching:
 
 ```jsx
 import React from 'react';
-import { ThemeProvider, GlassButton } from 'glassy-ui';
-import 'glassy-ui/dist/styles.css';
+import { ThemeProvider, GlassButton } from 'glassykit';
+import 'glassykit/dist/styles.css';
 
 function App() {
   return (
@@ -85,7 +85,7 @@ export default App;
 ### GlassButton
 
 ```jsx
-import { GlassButton } from 'glassy-ui';
+import { GlassButton } from 'glassykit';
 
 function ButtonDemo() {
   return (
@@ -102,7 +102,7 @@ function ButtonDemo() {
 ### GlassCard
 
 ```jsx
-import { GlassCard } from 'glassy-ui';
+import { GlassCard } from 'glassykit';
 
 function CardDemo() {
   return (
@@ -117,7 +117,7 @@ function CardDemo() {
 ### Theme Switching
 
 ```jsx
-import { useTheme, GlassSwitch } from 'glassy-ui';
+import { useTheme, GlassSwitch } from 'glassykit';
 
 function ThemeToggle() {
   const { theme, setTheme, isDark } = useTheme();
@@ -138,7 +138,7 @@ function ThemeToggle() {
 ### Toast Notifications
 
 ```jsx
-import { useToast, GlassButton, ToastProvider } from 'glassy-ui';
+import { useToast, GlassButton, ToastProvider } from 'glassykit';
 
 function ToastDemo() {
   const { showToast } = useToast();

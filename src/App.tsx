@@ -79,7 +79,7 @@ const GlassUIShowcase = () => {
       id: 'accordion-2',
       title: 'How to install?',
       content: (
-        <p>You can install GlassyUI using npm or yarn: <code>npm install glassy-ui</code></p>
+        <p>You can install GlassyUI using npm or yarn: <code>npm install glassykit</code></p>
       ),
     },
     {
@@ -125,7 +125,7 @@ const GlassUIShowcase = () => {
           <h3 className="text-xl font-semibold mb-2">Basic Usage</h3>
           <p>Import components from GlassyUI and start building beautiful interfaces.</p>
           <pre className="bg-black/30 p-2 mt-2 rounded">
-            {`import { GlassButton } from 'glassy-ui';\n\n<GlassButton>Click Me</GlassButton>`}
+            {`import { GlassButton } from 'glassykit';\n\n<GlassButton>Click Me</GlassButton>`}
           </pre>
         </div>
       ),
