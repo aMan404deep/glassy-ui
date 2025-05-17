@@ -1,0 +1,22 @@
+:root {
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --glass-blur: blur(12px);
+}
+
+.theme-dark {
+  --glass-bg: rgba(18, 18, 18, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.15);
+}
+
+.theme-neon {
+  --glass-bg: rgba(0, 255, 255, 0.1);
+  --glass-border: rgba(0, 255, 255, 0.3);
+  --glass-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+}
+
+.theme-frosted {
+  --glass-blur: blur(20px);
+  --glass-bg: rgba(255, 255, 255, 0.15);
+}
