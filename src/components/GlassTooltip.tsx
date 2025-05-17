@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { cn } from '../utils/cn';
+import '../styles/glass.css';
+import { useTheme } from '../theme/ThemeProvider';
 
 interface GlassTooltipProps {
   content: string;
@@ -15,6 +17,7 @@ const GlassTooltip: React.FC<GlassTooltipProps> = ({
   className,
 }) => {
   const [hover, setHover] = useState(false);
+  const { isDark } = useTheme();
 
   const positionClasses = {
     top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
@@ -28,7 +31,8 @@ const GlassTooltip: React.FC<GlassTooltipProps> = ({
       {hover && (
         <div
           className={cn(
-            'absolute z-50 px-3 py-1 text-sm text-white bg-white/10 backdrop-blur-lg border border-white/20 rounded shadow-md transition-all',
+            'glass absolute z-50 px-3 py-1 text-sm rounded-md shadow-md transition-all',
+            isDark ? 'border border-white/15' : 'border border-white/20',
             positionClasses[position],
             className
           )}
