@@ -44,7 +44,8 @@ Wrap your application with `ThemeProvider` to enable theme switching:
 ```jsx
 import React from 'react';
 import { ThemeProvider, GlassButton } from 'glassykit';
-import 'glassykit/dist/styles.css';
+import 'glassykit/styles/glass.css';
+import 'glassykit/styles/themes.css';
 
 function App() {
   return (
