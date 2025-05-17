@@ -199,6 +199,12 @@ GlassyUI uses modern CSS features like `backdrop-filter` which has the following
 
 For older browsers, components will still work but without the glass effect.
 
+https://github.com/user-attachments/assets/22280fb4-8099-4c29-878a-5554daf6a41c
+
+
+
+
+
 ## Contributing
 
 We welcome contributions to GlassyUI! Please see our [Contributing Guide](CONTRIBUTING.md) for more details.
