@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '../utils/cn';
+import '../styles/glass.css';
 
 interface GlassCardProps {
   children: React.ReactNode;
@@ -17,9 +18,9 @@ const GlassCard: React.FC<GlassCardProps> = ({
   return (
     <div
       className={cn(
-        'rounded-xl p-6 bg-white/10 backdrop-blur-lg border border-white/20 text-white transition-all',
+        'glass rounded-xl p-6 transition-all',
         shadow && 'shadow-xl',
-        hoverEffect && 'hover:scale-[1.02] hover:bg-white/15',
+        hoverEffect && 'hover:scale-[1.02]',
         className
       )}
     >

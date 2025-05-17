@@ -1,22 +1,61 @@
+/* Base theme variables */
 :root {
-  --glass-border: rgba(255, 255, 255, 0.2);
+  /* Light theme (default) */
   --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
   --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   --glass-blur: blur(12px);
+  --text-color: rgba(255, 255, 255, 0.9);
+  --text-color-secondary: rgba(255, 255, 255, 0.7);
+  --accent-color: rgba(255, 255, 255, 0.5);
+  --hover-bg: rgba(255, 255, 255, 0.2);
 }
 
+/* Dark theme */
 .theme-dark {
   --glass-bg: rgba(18, 18, 18, 0.4);
   --glass-border: rgba(255, 255, 255, 0.15);
+  --text-color: rgba(255, 255, 255, 0.9);
+  --text-color-secondary: rgba(255, 255, 255, 0.6);
+  --accent-color: rgba(120, 120, 255, 0.5);
+  --hover-bg: rgba(50, 50, 50, 0.3);
 }
 
+/* Light theme class */
+.theme-light {
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --text-color: rgba(255, 255, 255, 0.9);
+  --text-color-secondary: rgba(255, 255, 255, 0.7);
+  --accent-color: rgba(255, 255, 255, 0.5);
+  --hover-bg: rgba(255, 255, 255, 0.2);
+}
+
+/* Optional themes */
 .theme-neon {
   --glass-bg: rgba(0, 255, 255, 0.1);
   --glass-border: rgba(0, 255, 255, 0.3);
   --glass-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  --text-color: rgba(200, 255, 255, 0.9);
 }
 
 .theme-frosted {
   --glass-blur: blur(20px);
   --glass-bg: rgba(255, 255, 255, 0.15);
+}
+
+/* Shared glass styling */
+.glass {
+  background: var(--glass-bg);
+  border-radius: 12px;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.glass:hover {
+  background: var(--hover-bg);
 }
