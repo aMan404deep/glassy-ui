@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   GlassButton,
   GlassInput,
@@ -30,9 +30,10 @@ const GlassUIShowcase = () => {
   const [inputValue, setInputValue] = useState('');
   const [selectValue, setSelectValue] = useState('');
   const [showSpinner, setShowSpinner] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   
   // Update switch state whenever theme changes
-  React.useEffect(() => {
+  useEffect(() => {
     setSwitchOn(isDark);
   }, [isDark]);
 
@@ -54,10 +55,10 @@ const GlassUIShowcase = () => {
 
   // Sample data for components
   const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'Components', href: '#components' },
-    { label: 'Docs', href: '#docs' },
-    { label: 'About', href: '#about' },
+    { label: 'Home', href: '#home', id: 'home' },
+    { label: 'Components', href: '#components', id: 'components' },
+    { label: 'Themes', href: '#themes', id: 'themes' },
+    { label: 'About', href: '#about', id: 'about' },
   ];
 
   const selectOptions = [
@@ -137,105 +138,199 @@ const GlassUIShowcase = () => {
     ? "bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#334155]" 
     : "bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364]";
 
+  // Handle navigation click
+  const handleNavClick = (id: string) => {
+    setActiveSection(id);
+  };
+
   return (
-    <div className={`min-h-screen ${bgClasses} text-white pb-20`}>
-      <GlassNavbar logo="GlassyUI" items={navItems} />
+    <div className={`min-h-screen ${bgClasses} text-white`}>
+      <GlassNavbar 
+        logo="GlassyUI" 
+        items={navItems.map(item => ({
+          ...item,
+          onClick: () => handleNavClick(item.id)
+        }))} 
+        sticky
+      />
       
-      <div className="container mx-auto max-w-6xl px-6 pt-24 pb-10">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-4">GlassyUI</h1>
-          <p className="text-xl text-white/80 max-w-2xl mx-auto">
-            A modern React component library featuring beautiful glassmorphism-styled UI elements
-          </p>
+      {/* Hero Section */}
+      <section id="home" className="py-32 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          {/* Decorative elements */}
+          <div className="absolute top-20 left-1/4 w-64 h-64 rounded-full bg-purple-500/20 blur-3xl"></div>
+          <div className="absolute bottom-20 right-1/4 w-96 h-96 rounded-full bg-blue-500/20 blur-3xl"></div>
         </div>
-
-        {/* Theme Control */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Theme</h2>
-          <GlassCard className="flex items-center justify-center p-10">
-            <div className="flex items-center gap-3">
-              <span className="text-lg">Light</span>
-              <GlassSwitch checked={switchOn} onChange={handleThemeToggle} />
-              <span className="text-lg">Dark</span>
+        
+        <div className="container mx-auto max-w-6xl px-6 relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="md:w-1/2 text-center md:text-left">
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                GlassyUI
+              </h1>
+              <p className="text-xl text-white/80 mb-8 max-w-xl">
+                A modern React component library featuring beautiful glassmorphism-styled UI elements for creating stunning web applications
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                <GlassButton size="large" variant="frosted">Get Started</GlassButton>
+                <GlassButton size="large" variant="outline">Documentation</GlassButton>
+              </div>
             </div>
-          </GlassCard>
-        </section>
-
-        {/* Buttons */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Buttons</h2>
-          <GlassCard>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold">Variants</h3>
-                <div className="flex flex-wrap gap-4">
-                  <GlassButton variant="default">Default</GlassButton>
-                  <GlassButton variant="outline">Outline</GlassButton>
-                  <GlassButton variant="soft">Soft</GlassButton>
-                  <GlassButton variant="frosted">Frosted</GlassButton>
+            
+            <div className="md:w-1/2">
+              <GlassCard className="p-8 rotate-3 transform transition-transform hover:rotate-0">
+                <div className="flex flex-col gap-4">
+                  <GlassInput 
+                    label="Email" 
+                    placeholder="your@email.com" 
+                  />
+                  <div className="flex gap-4">
+                    <GlassSwitch checked={true} />
+                    <span>Remember me</span>
+                  </div>
+                  <GlassButton variant="frosted" fullWidth>Sign In</GlassButton>
                 </div>
+              </GlassCard>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Theme Control Section */}
+      <section id="themes" className="py-20 relative" style={{ display: activeSection === 'themes' || activeSection === 'home' ? 'block' : 'none' }}>
+        <div className="container mx-auto max-w-6xl px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 inline-block">
+              <span className="bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">Theme Customization</span>
+            </h2>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              Switch between light and dark themes to see how GlassyUI adapts to different contexts
+            </p>
+          </div>
+          
+          <GlassCard className="flex items-center justify-center p-10 mx-auto max-w-md backdrop-blur-xl">
+            <div className="flex items-center gap-8">
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-200 to-yellow-400 mb-3"></div>
+                <span className="text-lg">Light</span>
               </div>
               
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold">Actions</h3>
-                <div className="flex flex-wrap gap-4">
-                  <GlassButton onClick={() => setModalOpen(true)}>Open Modal</GlassButton>
-                  <GlassButton onClick={() => setShowSpinner(true)}>Show Spinner</GlassButton>
-                  <GlassButton 
-                    onClick={() => handleShowToast('success')}
-                    variant="frosted"
-                  >
-                    Show Toast
-                  </GlassButton>
-                </div>
+              <GlassSwitch 
+                checked={switchOn} 
+                onChange={handleThemeToggle} 
+                size="large"
+              />
+              
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-700 to-purple-900 mb-3"></div>
+                <span className="text-lg">Dark</span>
               </div>
             </div>
           </GlassCard>
-        </section>
+        </div>
+      </section>
 
-        {/* Forms */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Form Controls</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <GlassCard>
-              <h3 className="text-xl font-semibold mb-4">Input</h3>
-              <GlassInput 
-                label="Username" 
-                placeholder="Enter your username" 
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
+      {/* Components Showcase Section */}
+      <section id="components" className="py-20" style={{ display: activeSection === 'components' || activeSection === 'home' ? 'block' : 'none' }}>
+        <div className="container mx-auto max-w-6xl px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 inline-block">
+              <span className="bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">Beautiful Components</span>
+            </h2>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              Explore our collection of glassmorphic UI components designed for modern web applications
+            </p>
+          </div>
+          
+          {/* Cards Grid - Interactive Elements */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            {/* Buttons Card */}
+            <GlassCard className="p-6 hover:scale-105 transition-transform duration-300">
+              <h3 className="text-2xl font-semibold mb-4">Buttons</h3>
+              <div className="space-y-4">
+                <div className="flex flex-wrap gap-2">
+                  <GlassButton variant="default">Default</GlassButton>
+                  <GlassButton variant="outline">Outline</GlassButton>
+                  <GlassButton variant="frosted">Frosted</GlassButton>
+                </div>
+                <div className="pt-2">
+                  <GlassButton onClick={() => setModalOpen(true)} fullWidth>Open Modal</GlassButton>
+                </div>
+              </div>
             </GlassCard>
             
-            <GlassCard>
-              <h3 className="text-xl font-semibold mb-4">Select</h3>
-              <GlassSelect
-                label="Framework"
-                options={selectOptions}
-                value={selectValue}
-                onChange={setSelectValue}
-                placeholder="Choose a framework"
-              />
+            {/* Form Elements Card */}
+            <GlassCard className="p-6 hover:scale-105 transition-transform duration-300">
+              <h3 className="text-2xl font-semibold mb-4">Form Controls</h3>
+              <div className="space-y-4">
+                <GlassInput 
+                  label="Username" 
+                  placeholder="Enter your username" 
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                />
+                <GlassSelect
+                  label="Framework"
+                  options={selectOptions}
+                  value={selectValue}
+                  onChange={setSelectValue}
+                  placeholder="Choose a framework"
+                />
+              </div>
             </GlassCard>
             
-            <GlassCard>
-              <h3 className="text-xl font-semibold mb-4">Switch</h3>
-              <div className="flex items-center gap-2">
-                <span>Disabled</span>
-                <GlassSwitch checked={switchOn} onChange={setSwitchOn} />
-                <span>Enabled</span>
+            {/* Loaders Card */}
+            <GlassCard className="p-6 hover:scale-105 transition-transform duration-300">
+              <h3 className="text-2xl font-semibold mb-4">Loaders</h3>
+              <div className="flex items-center justify-around">
+                <div className="flex flex-col items-center">
+                  <GlassSpinner size="small" />
+                  <span className="mt-2">Small</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <GlassSpinner size="medium" />
+                  <span className="mt-2">Medium</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <GlassSpinner size="large" />
+                  <span className="mt-2">Large</span>
+                </div>
+              </div>
+              <div className="mt-4">
+                <GlassButton 
+                  onClick={() => {
+                    setShowSpinner(true);
+                    setTimeout(() => setShowSpinner(false), 2000);
+                  }}
+                  fullWidth
+                >
+                  Show Fullscreen Spinner
+                </GlassButton>
               </div>
             </GlassCard>
           </div>
-        </section>
-
-        {/* Badges */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Badges</h2>
-          <GlassCard>
-            <div className="space-y-6 p-6">
-              <div className="space-y-3">
-                <h3 className="text-xl font-semibold">Standard Badges</h3>
+          
+          {/* Information Components */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+            {/* Tabs Component */}
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold mb-4">Tabs</h3>
+              <GlassTabs tabs={tabItems} />
+            </div>
+            
+            {/* Accordion Component */}
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold mb-4">Accordion</h3>
+              <GlassAccordion items={accordionItems} />
+            </div>
+          </div>
+          
+          {/* Badges and Tooltips Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Badges */}
+            <GlassCard className="p-6">
+              <h3 className="text-2xl font-semibold mb-4">Badges</h3>
+              <div className="space-y-4">
                 <div className="flex flex-wrap gap-3">
                   <GlassBadge>Default</GlassBadge>
                   <GlassBadge variant="success">Success</GlassBadge>
@@ -243,122 +338,113 @@ const GlassUIShowcase = () => {
                   <GlassBadge variant="error">Error</GlassBadge>
                   <GlassBadge variant="info">Info</GlassBadge>
                 </div>
-              </div>
-              
-              <div className="space-y-3">
-                <h3 className="text-xl font-semibold">Pill Badges</h3>
                 <div className="flex flex-wrap gap-3">
-                  <GlassBadge pill>Default</GlassBadge>
-                  <GlassBadge pill variant="success">Success</GlassBadge>
-                  <GlassBadge pill variant="warning">Warning</GlassBadge>
-                  <GlassBadge pill variant="error">Error</GlassBadge>
-                  <GlassBadge pill variant="info">Info</GlassBadge>
+                  <GlassBadge pill>Pill</GlassBadge>
+                  <GlassBadge pill variant="success">Pill Success</GlassBadge>
+                  <GlassBadge pill variant="warning">Pill Warning</GlassBadge>
                 </div>
               </div>
-              
-              <div className="space-y-3">
-                <h3 className="text-xl font-semibold">With Dot</h3>
-                <div className="flex flex-wrap gap-3">
-                  <GlassBadge dot>Default</GlassBadge>
-                  <GlassBadge dot variant="success">Success</GlassBadge>
-                  <GlassBadge dot variant="warning">Warning</GlassBadge>
-                  <GlassBadge dot variant="error">Error</GlassBadge>
-                  <GlassBadge dot variant="info">Info</GlassBadge>
-                </div>
-              </div>
-            </div>
-          </GlassCard>
-        </section>
-
-        {/* Cards, Accordion & Tabs */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Information Display</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-6">
-              <GlassCard shadow hoverEffect>
-                <h3 className="text-xl font-semibold mb-4">Interactive Card</h3>
-                <p>This card has a hover effect and shadow.</p>
-              </GlassCard>
-              
-              <GlassAccordion items={accordionItems} />
-            </div>
+            </GlassCard>
             
-            <div>
-              <GlassTabs tabs={tabItems} />
-            </div>
+            {/* Tooltips */}
+            <GlassCard className="p-6">
+              <h3 className="text-2xl font-semibold mb-4">Tooltips</h3>
+              <div className="flex flex-wrap justify-around gap-4">
+                <GlassTooltip content="Information appears on hover" position="top">
+                  <GlassButton>Hover Me</GlassButton>
+                </GlassTooltip>
+                
+                <GlassTooltip content="Bottom tooltip with more content" position="bottom">
+                  <GlassButton variant="outline">Another Tooltip</GlassButton>
+                </GlassTooltip>
+              </div>
+            </GlassCard>
           </div>
-        </section>
-
-        {/* Tooltips */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Tooltips</h2>
-          <GlassCard className="p-10 flex justify-center">
-            <div className="flex flex-wrap gap-12">
-              <GlassTooltip content="Top tooltip" position="top">
-                <GlassButton>Hover Me (Top)</GlassButton>
-              </GlassTooltip>
-              
-              <GlassTooltip content="Bottom tooltip" position="bottom">
-                <GlassButton>Hover Me (Bottom)</GlassButton>
-              </GlassTooltip>
-              
-              <GlassTooltip content="Left tooltip" position="left">
-                <GlassButton>Hover Me (Left)</GlassButton>
-              </GlassTooltip>
-              
-              <GlassTooltip content="Right tooltip with more content to show" position="right">
-                <GlassButton>Hover Me (Right)</GlassButton>
-              </GlassTooltip>
-            </div>
-          </GlassCard>
-        </section>
-
-        {/* Toast Examples */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Toast Notifications</h2>
-          <GlassCard className="p-6">
-            <div className="flex flex-wrap gap-4">
-              <GlassButton onClick={() => handleShowToast('info')}>
+        </div>
+      </section>
+      
+      {/* Toast Notifications Section */}
+      <section className="py-20" style={{ display: activeSection === 'components' || activeSection === 'home' ? 'block' : 'none' }}>
+        <div className="container mx-auto max-w-6xl px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 inline-block">
+              <span className="bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">Notifications</span>
+            </h2>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              Beautiful toast notifications to inform your users
+            </p>
+          </div>
+          
+          <GlassCard className="p-8 max-w-3xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <GlassButton onClick={() => handleShowToast('info')} variant="frosted">
                 Info Toast
               </GlassButton>
-              <GlassButton onClick={() => handleShowToast('success')}>
+              <GlassButton onClick={() => handleShowToast('success')} variant="frosted">
                 Success Toast
               </GlassButton>
-              <GlassButton onClick={() => handleShowToast('warning')}>
+              <GlassButton onClick={() => handleShowToast('warning')} variant="frosted">
                 Warning Toast
               </GlassButton>
-              <GlassButton onClick={() => handleShowToast('error')}>
+              <GlassButton onClick={() => handleShowToast('error')} variant="frosted">
                 Error Toast
               </GlassButton>
             </div>
           </GlassCard>
-        </section>
+        </div>
+      </section>
 
-        {/* Spinner */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Spinners</h2>
-          <GlassCard className="p-6">
-            <div className="flex flex-wrap items-center justify-around gap-6">
-              <div className="flex flex-col items-center">
-                <p className="mb-3">Small</p>
-                <GlassSpinner size="small" />
-              </div>
-              <div className="flex flex-col items-center">
-                <p className="mb-3">Medium</p>
-                <GlassSpinner size="medium" />
-              </div>
-              <div className="flex flex-col items-center">
-                <p className="mb-3">Large</p>
-                <GlassSpinner size="large" />
-              </div>
-              <div className="flex flex-col items-center">
-                <p className="mb-3">With Label</p>
-                <GlassSpinner label="Loading..." />
-              </div>
-            </div>
-          </GlassCard>
-        </section>
-      </div>
+      {/* About Section */}
+      <section id="about" className="py-20" style={{ display: activeSection === 'about' || activeSection === 'home' ? 'block' : 'none' }}>
+        <div className="container mx-auto max-w-6xl px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 inline-block">
+              <span className="bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">About GlassyUI</span>
+            </h2>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              The modern solution for creating beautiful, glassmorphic interfaces
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <GlassCard className="p-6 hover:scale-105 transition-transform duration-300">
+              <h3 className="text-2xl font-semibold mb-4">Modern Design</h3>
+              <p className="text-white/80">
+                GlassyUI embraces the glassmorphism trend with beautiful, translucent components that add depth to your applications.
+              </p>
+            </GlassCard>
+            
+            <GlassCard className="p-6 hover:scale-105 transition-transform duration-300">
+              <h3 className="text-2xl font-semibold mb-4">Easy Integration</h3>
+              <p className="text-white/80">
+                Built for React applications with TypeScript support, GlassyUI is easy to integrate into your existing projects.
+              </p>
+            </GlassCard>
+            
+            <GlassCard className="p-6 hover:scale-105 transition-transform duration-300">
+              <h3 className="text-2xl font-semibold mb-4">Customizable</h3>
+              <p className="text-white/80">
+                Customize themes, colors, and styles to match your brand and create a unique user experience.
+              </p>
+            </GlassCard>
+          </div>
+          
+          <div className="mt-16 text-center">
+            <GlassButton size="large" variant="frosted">
+              Get Started
+            </GlassButton>
+          </div>
+        </div>
+      </section>
+      
+      {/* Footer */}
+      <footer className="py-12 border-t border-white/10">
+        <div className="container mx-auto max-w-6xl px-6 text-center">
+          <p className="text-white/60">
+            © {new Date().getFullYear()} GlassyUI. All rights reserved.
+          </p>
+        </div>
+      </footer>
 
       {/* Modal Demo */}
       <GlassModal isOpen={modalOpen} onClose={() => setModalOpen(false)} title="Glass Modal">
@@ -379,15 +465,6 @@ const GlassUIShowcase = () => {
           label="Loading..."
         />
       )}
-      {/* Auto-hide spinner after 2 seconds */}
-      {React.useEffect(() => {
-        if (showSpinner) {
-          const timer = setTimeout(() => {
-            setShowSpinner(false);
-          }, 2000);
-          return () => clearTimeout(timer);
-        }
-      }, [showSpinner])}
     </div>
   );
 };
